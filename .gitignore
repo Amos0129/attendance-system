@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environment
+.env
+.venv
+venv/
+ENV/
+env/
+
+# FastAPI & Uvicorn logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# macOS / Windows
+.DS_Store
+Thumbs.db
+
+# Pytest
+.pytest_cache/
+
+# MongoDB Compass exports or dumps
+dump/
+*.bson
+*.json
+
+# Optional: 如果有 token key 或秘密設定
+.env
+.env.*
+
+# VSCode Workspace Settings
+*.code-workspace
+
+# Others
+coverage/
+htmlcov/
