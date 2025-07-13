@@ -3,7 +3,7 @@ from app.utils.auth_dependency import require_admin
 from app.schemas.attendance_setting_schema import AttendanceSettingCreate, AttendanceSettingOut
 from app.repositories import attendance_setting_repository
 
-router = APIRouter(prefix="/settings/attendance", tags=["打卡設定"])
+router = APIRouter(prefix="/settings/attendance", tags=["Attendance Setting"])
 
 @router.get("/", response_model=AttendanceSettingOut)
 def get_attendance_setting(user=Depends(require_admin)):

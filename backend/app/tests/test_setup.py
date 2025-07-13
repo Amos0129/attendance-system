@@ -1,5 +1,5 @@
 # tests/test_setup.py
-from datetime import datetime
+from datetime import datetime, timezone
 from app.db import db
 from app.utils.security import hash_password
 from app.utils.time_utils import today_range_in_utc
@@ -11,8 +11,8 @@ def setup_test_user():
             "username": "stella",
             "password": hash_password("!QAZ 0okm 8uhb"),
             "role": "user",
-            "created_at": datetime.utcnow(),
-            "updated_at": datetime.utcnow()
+            "created_at": datetime.now(timezone.utc),
+            "updated_at": datetime.now(timezone.utc)
         })
 
 def clean_today_attendance(username: str):
@@ -33,5 +33,5 @@ def ensure_test_device_exists():
             "name": "測試裝置",
             "location": "總公司",
             "is_active": True,
-            "created_at": datetime.utcnow()
+            "created_at": datetime.now(timezone.utc)
         })

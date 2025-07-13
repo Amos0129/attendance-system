@@ -1,6 +1,6 @@
 from app.db import db
 from bson import ObjectId
-from datetime import datetime
+from datetime import datetime, timezone
 from app.utils.time_utils import to_taipei
 from app.repositories import attendance_repository
 
@@ -61,7 +61,7 @@ def generate_report(user_id: str, month: str):
         "total_overtime": total_ot,
         "total_absences": total_absent,
         "month": month,
-        "created_at": datetime.utcnow(),
+        "created_at": datetime.now(timezone.utc),
     }
 
     result = reports.insert_one(report)

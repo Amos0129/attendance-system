@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from datetime import datetime
+from datetime import datetime, datetime
 from app.main import app
 from app.db import db
 from .test_setup import setup_test_user, clean_today_attendance, ensure_test_device_exists
@@ -56,5 +56,5 @@ def ensure_test_device_exists():
             "name": "測試裝置",
             "location": "總公司",
             "is_active": True,
-            "created_at": datetime.utcnow()
+            "created_at": datetime.now(timezone.utc)
         })
