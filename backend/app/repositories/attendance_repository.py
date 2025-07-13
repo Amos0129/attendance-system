@@ -7,6 +7,12 @@ from bson import ObjectId
 attendances = db["attendances"]
 settings = db["attendance_settings"]
 
+def parse_time_string(value: str) -> time:
+    try:
+        return datetime.strptime(value, "%H:%M:%S").time()
+    except ValueError:
+        return datetime.strptime(value, "%H:%M").time()
+
 def get_all_attendance():
     records = attendances.find().sort("clock_in", -1)
     result = []
@@ -45,7 +51,7 @@ def clock_in(user_id: str, device_id=None, location=None):
     now_local = to_taipei(now_utc)
 
     setting = get_setting()
-    work_start = datetime.strptime(setting["work_start_time"], "%H:%M").time()
+    work_start = parse_time_string(setting["work_start_time"])
     grace = setting.get("grace_period", 0)
 
     work_start_with_grace = (datetime.combine(now_local.date(), work_start) + timedelta(minutes=grace)).time()
@@ -75,7 +81,7 @@ def clock_out(user_id: str):
     now_local = to_taipei(now_utc)
 
     setting = get_setting()
-    work_end = datetime.strptime(setting["work_end_time"], "%H:%M").time()
+    work_end = parse_time_string(setting["work_end_time"])
     is_early = now_local.time() < work_end
 
     attendances.update_one(
