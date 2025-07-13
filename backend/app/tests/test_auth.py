@@ -7,7 +7,7 @@ client = TestClient(app)
 USERNAME = "phchuang"
 PASSWORD = "!QAZ 0okm 8uhb"
 def test_login_success():
-    response = client.post("/login", data={
+    response = client.post("/auth/login", data={
         "username": USERNAME,
         "password": PASSWORD
     })
@@ -17,7 +17,7 @@ def test_login_success():
     assert data["token_type"] == "bearer"
 
 def test_login_fail():
-    response = client.post("/login", data={
+    response = client.post("/auth/login", data={
         "username": USERNAME,
         "password": "wrongpassword"
     })
@@ -25,7 +25,7 @@ def test_login_fail():
 
 def test_get_me_with_token():
     # 登入取得 token
-    login = client.post("/login", data={
+    login = client.post("/auth/login", data={
         "username": USERNAME,
         "password": PASSWORD
     })

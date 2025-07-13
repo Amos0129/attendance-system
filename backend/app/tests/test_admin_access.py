@@ -6,7 +6,7 @@ from app.main import app
 client = TestClient(app)
 
 def get_token(username, password):
-    response = client.post("/login", data={
+    response = client.post("/auth/login", data={
         "username": username,
         "password": password
     })

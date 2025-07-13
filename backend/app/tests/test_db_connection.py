@@ -1,4 +1,4 @@
-from db import db
+from app.db import db
 
 def test_connection():
     users = db["users"]

@@ -1,6 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.schemas.user_schema import UserLogin
-from app.controllers import user_controller
+from app.repositories import user_repository
 from app.utils.jwt_handler import create_access_token
 from passlib.hash import bcrypt
 from fastapi import Depends
@@ -17,7 +16,7 @@ router = APIRouter(
 @router.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends()):
     try:
-        db_user = user_controller.get_user_by_username(form_data.username)
+        db_user = user_repository.get_user_by_username(form_data.username)
         if not db_user or not bcrypt.verify(form_data.password, db_user["password"]):
             raise HTTPException(status_code=401, detail="Invalid username or password")
         

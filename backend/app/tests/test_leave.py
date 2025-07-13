@@ -25,7 +25,7 @@ def test_apply_leave():
 
     response = client.post("/leave/", json=leave_data, headers=headers)
     assert response.status_code == 200
-    assert isinstance(response.json(), str)  # 回傳 leave id
+    assert isinstance(response.json(), str)
 
 def test_get_my_leaves():
     token = get_token()

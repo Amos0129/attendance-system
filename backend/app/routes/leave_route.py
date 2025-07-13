@@ -28,3 +28,21 @@ def update_status(leave_id: str, update: LeaveUpdate, current_user = Depends(get
     if modified == 0:
         raise HTTPException(status_code=404, detail="Leave not found")
     return {"message": "Status updated"}
+
+@router.get("/{leave_id}", response_model=LeaveOut)
+def get_leave(leave_id: str, current_user = Depends(get_current_user)):
+    leave = leave_repository.get_leave_by_id(leave_id)
+    if not leave:
+        raise HTTPException(status_code=404, detail="Leave not found")
+    if current_user["role"] != "Admin" and str(leave["user_id"]) != current_user["id"]:
+        raise HTTPException(status_code=403, detail="No permission to view this leave")
+    return leave
+
+@router.delete("/{leave_id}")
+def delete_leave(leave_id: str, current_user = Depends(get_current_user)):
+    if current_user["role"] != "Admin":
+        raise HTTPException(status_code=403, detail="No permission")
+    deleted = leave_repository.delete_leave(leave_id)
+    if deleted == 0:
+        raise HTTPException(status_code=404, detail="Leave not found")
+    return {"message": "Leave deleted"}

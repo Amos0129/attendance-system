@@ -1,7 +1,6 @@
 from app.db import db
-from datetime import datetime
-from bson import ObjectId
 from datetime import datetime, timezone
+from bson import ObjectId
 
 users = db["users"]
 
