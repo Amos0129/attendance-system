@@ -7,6 +7,15 @@ from bson import ObjectId
 attendances = db["attendances"]
 settings = db["attendance_settings"]
 
+def get_all_attendance():
+    records = attendances.find().sort("clock_in", -1)
+    result = []
+    for record in records:
+        record["_id"] = str(record["_id"])
+        record["user_id"] = str(record["user_id"])
+        result.append(record)
+    return result
+
 def get_today_attendance(user_id: str):
     start, end = today_range_in_utc()
     return attendances.find_one({
