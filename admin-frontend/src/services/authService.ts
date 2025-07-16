@@ -1,21 +1,30 @@
-export async function login(username: string, password: string): Promise<string> {
-  const response = await fetch('http://localhost:8000/auth/json-login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username, password }),
-  })
+// src/services/authService.ts
+import { apiClient } from './apiClient'
+import { LoginRequest, LoginResponse } from '../types/auth'
 
-  const data = await response.json()
-
-  if (!response.ok) {
-    throw new Error(data?.detail || data?.message || '登入失敗')
+class AuthService {
+  async login(username: string, password: string): Promise<LoginResponse> {
+    const loginData: LoginRequest = { username, password }
+    const response = await apiClient.post<LoginResponse>('/auth/json-login', loginData)
+    
+    if (response.access_token) {
+      localStorage.setItem('token', response.access_token)
+    }
+    
+    return response
   }
 
-  if (data.access_token) {
-    localStorage.setItem('token', data.access_token)
+  async logout(): Promise<void> {
+    localStorage.removeItem('token')
   }
 
-  return data.message || '登入成功'
+  async getCurrentUser(): Promise<any> {
+    return apiClient.get('/auth/me')
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token')
+  }
 }
+
+export const authService = new AuthService()

@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-slate-700;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white font-sans;
+  }
+}
+
+@layer utilities {
+  /* 背景漸變 */
+  .bg-auth-gradient {
+    @apply bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900;
+  }
+
+  /* 玻璃效果 */
+  .glass {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10;
+  }
+
+  /* 文字漸變 */
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-300 to-indigo-300 bg-clip-text text-transparent;
+  }
+
+  /* 按鈕效果 */
+  .btn-gradient {
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700;
+  }
+
+  /* 動畫 */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+  }
+
+  .animate-bounce-in {
+    animation: bounceIn 0.8s ease-out;
+  }
+
+  /* 自定義捲軸 */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-slate-800 rounded-full;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-slate-600 rounded-full hover:bg-slate-500;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 輸入框聚焦效果 */
+.input-focus-ring:focus {
+  @apply ring-2 ring-blue-500/40 border-blue-500/40;
+}
+
+/* 按鈕載入狀態 */
+.btn-loading {
+  @apply relative overflow-hidden;
+}
+
+.btn-loading::before {
+  content: '';
+  @apply absolute inset-0 bg-white/20 animate-pulse;
+}
+
+/* 卡片陰影效果 */
+.card-shadow {
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* 表單驗證樣式 */
+.form-error {
+  @apply border-red-500/50 focus:ring-red-500/40 focus:border-red-500/40;
+}
+
+.form-success {
+  @apply border-green-500/50 focus:ring-green-500/40 focus:border-green-500/40;
+}
+
+/* 響應式字體 */
+@media (max-width: 640px) {
+  .text-responsive-xl {
+    @apply text-2xl;
+  }
+}
+
+@media (min-width: 641px) {
+  .text-responsive-xl {
+    @apply text-3xl;
+  }
+}
+
+/* 減少動畫偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-bounce-in {
+    animation: none;
+  }
+  
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
