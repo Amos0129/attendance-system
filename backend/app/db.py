@@ -1,11 +1,5 @@
 from pymongo import MongoClient
-from dotenv import load_dotenv
-import os
-
-# 讀取 .env 中的變數
-load_dotenv()
-
-MONGO_URI = os.getenv("MONGO_URI")
+from .config import MONGO_URI, DB_NAME
 
 client = MongoClient(MONGO_URI)
-db = client["phchuang"]  # 這裡是你 MongoDB 的 database 名稱
+db = client[DB_NAME]

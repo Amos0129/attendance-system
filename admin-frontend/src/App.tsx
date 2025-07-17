@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './contexts/AuthContext'
 import { ProtectedRoute } from './components/common/ProtectedRoute'
 import { LoginPage } from './pages/LoginPage'
-import { DashboardPage } from './pages/DashboardPage'
-import { AttendancePage } from './pages/AttendancePage'
+import DashboardPage from './pages/DashboardPage'
 
 function App() {
   return (
@@ -23,11 +22,6 @@ function App() {
           />
           <Route 
             path="/attendance" 
-            element={
-              <ProtectedRoute>
-                <AttendancePage />
-              </ProtectedRoute>
-            } 
           />
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>

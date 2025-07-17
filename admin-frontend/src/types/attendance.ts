@@ -1,11 +1,15 @@
 // src/types/attendance.ts
 export interface AttendanceRecord {
-  id: number
-  user_id: number
-  check_in: string
-  check_out?: string
+  id: string
+  user_id: string
+  clock_in: string
+  clock_out?: string
   date: string
   status: 'present' | 'absent' | 'late' | 'leave'
+  is_late: boolean
+  is_early_leave: boolean
+  device_id?: string
+  location?: string
   notes?: string
   created_at: string
   updated_at: string
@@ -18,4 +22,18 @@ export interface AttendanceStats {
   late_days: number
   leave_days: number
   attendance_rate: number
+}
+
+export interface ClockInRequest {
+  device_id?: string
+  location?: string
+}
+
+export interface ClockInResponse {
+  message: string
+  id: string
+}
+
+export interface ClockOutResponse {
+  message: string
 }

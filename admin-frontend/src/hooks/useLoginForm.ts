@@ -1,6 +1,7 @@
 // src/hooks/useLoginForm.ts
 import { useState } from 'react'
 import { authService } from '../services/authService'
+import { useNavigate } from 'react-router-dom'
 
 export const useLoginForm = () => {
   const [username, setUsername] = useState('')
@@ -9,6 +10,8 @@ export const useLoginForm = () => {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
+  const navigate = useNavigate()
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -16,7 +19,7 @@ export const useLoginForm = () => {
 
     try {
       const response = await authService.login(username, password)
-      alert('登入成功') // 可以改成跳轉邏輯
+      navigate('/dashboard') // ✅ 登入成功後跳轉
     } catch (err: any) {
       setError(err.message || '登入失敗')
     } finally {
