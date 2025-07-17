@@ -5,24 +5,31 @@ import { AuthProvider } from './contexts/AuthContext'
 import { ProtectedRoute } from './components/common/ProtectedRoute'
 import { LoginPage } from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
+import { EmployeePage } from './pages/EmployeePage'
+import { DashboardLayoutWrapper } from './layouts/DashboardLayoutWrapper'
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Routes>
+          {/* Public route */}
           <Route path="/login" element={<LoginPage />} />
-          <Route 
-            path="/dashboard" 
+
+          {/* Protected routes with layout */}
+          <Route
             element={
               <ProtectedRoute>
-                <DashboardPage />
+                <DashboardLayoutWrapper />
               </ProtectedRoute>
-            } 
-          />
-          <Route 
-            path="/attendance" 
-          />
+            }
+          >
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/employees" element={<EmployeePage />} />
+            {/* 其他登入後頁面都寫在這 */}
+          </Route>
+
+          {/* Redirect root path */}
           <Route path="/" element={<Navigate to="/login" replace />} />
         </Routes>
       </AuthProvider>

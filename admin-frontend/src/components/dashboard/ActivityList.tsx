@@ -2,7 +2,7 @@
 import React from 'react'
 import { ChevronRight } from 'lucide-react'
 
-interface Activity {
+export interface Activity {
   title: string
   time: string
   type: string
