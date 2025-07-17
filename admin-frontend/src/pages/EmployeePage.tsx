@@ -5,6 +5,7 @@ import { Loading } from '../components/ui'
 import { EmployeeCard } from '../components/employee/EmployeeCard'
 import { EmployeeFilters } from '../components/employee/EmployeeFilters'
 import { useEmployees } from '../hooks/useEmployees'
+import CreateEmployeeModal from '../components/employee/CreateEmployeeModal'
 import { User } from '../types'
 
 export const EmployeePage: React.FC = () => {
@@ -27,47 +28,30 @@ export const EmployeePage: React.FC = () => {
   const [selectedEmployee, setSelectedEmployee] = useState<User | null>(null)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
 
-  // 新增員工
   const handleCreate = () => {
     setFormMode('create')
     setSelectedEmployee(null)
     setShowForm(true)
   }
 
-  // 編輯員工
   const handleEdit = (employee: User) => {
     setFormMode('edit')
     setSelectedEmployee(employee)
     setShowForm(true)
   }
 
-  // 刪除員工
   const handleDelete = (id: string) => {
     setDeleteConfirm(id)
   }
 
   const confirmDelete = async () => {
     if (!deleteConfirm) return
-    
     const success = await deleteEmployee(deleteConfirm)
-    if (success) {
-      setDeleteConfirm(null)
-    }
-  }
-
-  // 表單提交
-  const handleFormSubmit = async (data: any) => {
-    if (formMode === 'create') {
-      return await createEmployee(data)
-    } else if (selectedEmployee) {
-      return await updateEmployee(selectedEmployee.id, data)
-    }
-    return false
+    if (success) setDeleteConfirm(null)
   }
 
   return (
     <div className="space-y-6">
-      {/* 頁面標題 */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">員工管理</h1>
@@ -92,7 +76,6 @@ export const EmployeePage: React.FC = () => {
         </div>
       </div>
 
-      {/* 錯誤訊息 */}
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4">
           <div className="flex items-center justify-between">
@@ -110,7 +93,6 @@ export const EmployeePage: React.FC = () => {
         </div>
       )}
 
-      {/* 搜尋和篩選 */}
       <EmployeeFilters
         searchParams={searchParams}
         onSearchParamsChange={updateSearch}
@@ -118,7 +100,6 @@ export const EmployeePage: React.FC = () => {
         filteredCount={employees.length}
       />
 
-      {/* 員工列表 */}
       {loading ? (
         <div className="flex justify-center py-12">
           <Loading size="lg" text="載入員工資料中..." />
@@ -129,10 +110,14 @@ export const EmployeePage: React.FC = () => {
             <Plus className="w-8 h-8 text-gray-400" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
-            {searchParams.search || searchParams.role !== 'all' ? '沒有找到符合條件的員工' : '還沒有員工資料'}
+            {searchParams.search || searchParams.role !== 'all'
+              ? '沒有找到符合條件的員工'
+              : '還沒有員工資料'}
           </h3>
           <p className="text-gray-600 mb-4">
-            {searchParams.search || searchParams.role !== 'all' ? '請試試調整搜尋條件' : '點擊上方按鈕新增第一個員工'}
+            {searchParams.search || searchParams.role !== 'all'
+              ? '請試試調整搜尋條件'
+              : '點擊上方按鈕新增第一個員工'}
           </p>
           {!(searchParams.search || searchParams.role !== 'all') && (
             <button
@@ -156,14 +141,12 @@ export const EmployeePage: React.FC = () => {
         </div>
       )}
 
-      {/* 刪除確認 Modal */}
+      {/* 刪除確認 */}
       {deleteConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-4 shadow-2xl">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">確認刪除</h3>
-            <p className="text-gray-600 mb-6">
-              確定要刪除這位員工嗎？此操作無法復原。
-            </p>
+            <p className="text-gray-600 mb-6">確定要刪除這位員工嗎？此操作無法復原。</p>
             <div className="flex gap-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
@@ -182,6 +165,14 @@ export const EmployeePage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* ✅ 新增/編輯員工 Modal */}
+      <CreateEmployeeModal
+        isOpen={showForm}
+        onClose={() => setShowForm(false)}
+        onSuccess={refreshEmployees}
+        initialData={formMode === 'edit' ? selectedEmployee : undefined}
+      />
     </div>
   )
 }
