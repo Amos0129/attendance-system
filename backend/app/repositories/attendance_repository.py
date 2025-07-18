@@ -19,6 +19,13 @@ def get_all_attendance():
     for record in records:
         record["_id"] = str(record["_id"])
         record["user_id"] = str(record["user_id"])
+        
+        # 轉換為台灣時間
+        if record.get("clock_in"):
+            record["clock_in"] = to_taipei(record["clock_in"]).isoformat()
+        if record.get("clock_out"):
+            record["clock_out"] = to_taipei(record["clock_out"]).isoformat()
+            
         result.append(record)
     return result
 
