@@ -4,7 +4,9 @@ import pytz
 tz_taipei = pytz.timezone("Asia/Taipei")
 
 def to_taipei(dt: datetime) -> datetime:
-    """轉換 UTC 或其他時區時間為台灣時間"""
+    """確保來源是 UTC，然後轉為台灣時間"""
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
     return dt.astimezone(tz_taipei)
 
 def now_taipei() -> datetime:

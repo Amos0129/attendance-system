@@ -1,21 +1,21 @@
 // src/components/attendance/AttendanceQuickActions.tsx
 import React from 'react'
 import {
-  UserCheck,
-  UserX,
   Download,
   BarChart3,
+  Users,
+  FileText,
   Calendar,
   Clock,
   TrendingUp,
-  Users
+  Eye
 } from 'lucide-react'
 
 interface AttendanceQuickActionsProps {
-  onClockIn: () => void
-  onClockOut: () => void
   onExportReport: () => void
   onViewStats: () => void
+  onViewUsers: () => void
+  onViewReports: () => void
   todayStats?: {
     present: number
     late: number
@@ -25,36 +25,36 @@ interface AttendanceQuickActionsProps {
 }
 
 export const AttendanceQuickActions: React.FC<AttendanceQuickActionsProps> = ({
-  onClockIn,
-  onClockOut,
   onExportReport,
   onViewStats,
+  onViewUsers,
+  onViewReports,
   todayStats
 }) => {
   const quickActions = [
     {
-      icon: UserCheck,
-      label: '員工簽到',
-      color: 'bg-green-500',
-      onClick: onClockIn,
-    },
-    {
-      icon: UserX,
-      label: '員工簽退',
-      color: 'bg-blue-500',
-      onClick: onClockOut,
-    },
-    {
       icon: Download,
       label: '匯出報表',
-      color: 'bg-purple-500',
+      color: 'bg-green-500',
       onClick: onExportReport,
     },
     {
       icon: BarChart3,
       label: '統計分析',
-      color: 'bg-orange-500',
+      color: 'bg-purple-500',
       onClick: onViewStats,
+    },
+    {
+      icon: Users,
+      label: '員工管理',
+      color: 'bg-blue-500',
+      onClick: onViewUsers,
+    },
+    {
+      icon: FileText,
+      label: '詳細報告',
+      color: 'bg-orange-500',
+      onClick: onViewReports,
     },
   ]
 
@@ -88,10 +88,10 @@ export const AttendanceQuickActions: React.FC<AttendanceQuickActionsProps> = ({
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 h-full">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-lg font-semibold text-gray-900">快速操作</h3>
+        <h3 className="text-lg font-semibold text-gray-900">管理操作</h3>
         <div className="flex items-center gap-2 text-sm text-gray-500">
-          <Clock className="w-4 h-4" />
-          <span>出勤管理</span>
+          <Eye className="w-4 h-4" />
+          <span>管理員視圖</span>
         </div>
       </div>
       
