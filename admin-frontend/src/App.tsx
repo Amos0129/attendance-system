@@ -7,6 +7,7 @@ import { LoginPage } from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import { EmployeePage } from './pages/EmployeePage'
 import { AttendancePage } from './pages/AttendancePage'
+import { LeavePage } from './pages/LeavePage'
 import { DashboardLayoutWrapper } from './layouts/DashboardLayoutWrapper'
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/employees" element={<EmployeePage />} />
             <Route path="/attendance" element={<AttendancePage />} />
+            <Route path="/leave" element={<LeavePage />} />
             {/* 其他登入後頁面都寫在這 */}
           </Route>
 
